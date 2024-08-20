@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 
 export default class NavBar extends Component {
-
   render() {
     return (
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -33,7 +32,6 @@ export default class NavBar extends Component {
                   About
                 </a>
               </li>
-              
             </ul>
           </div>
         </div>
@@ -41,4 +39,3 @@ export default class NavBar extends Component {
     );
   }
 }
-
