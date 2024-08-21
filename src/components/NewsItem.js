@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./styles/newsItems.css";
+import noImage from "./images/no-image.jpg";
 
 export class NewsItem extends Component {
   render() {
@@ -13,25 +14,26 @@ export class NewsItem extends Component {
               style={{ width: "18rem", height: "24rem", overflow: "hidden" }}
             >
               {imgUrl ? (
-                <img
-                  src={imgUrl}
-                  className="card_image"
-                  alt="..."
-                  onError={(e) => {
-                    e.target.src =
-                      "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg";
-                  }}
-                />
+                  <img
+                    src={imgUrl}
+                    className="card_image"
+                    alt="..."
+                    loading="lazy"
+                  />
               ) : (
                 <img
-                  src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg"
+                  loading="lazy"
+                  src={noImage}
                   className="card_image"
                   alt="..."
                 />
               )}
               <div className="card-body d-flex align-content-around flex-wrap">
                 {title ? (
-                  <h5 className="card-title" style={{ color:"red", textDecoration:"underline"}}>
+                  <h5
+                    className="card-title"
+                    style={{ color: "red", textDecoration: "underline" }}
+                  >
                     {title.slice(0, 35)} {title.length > 35 ? "..." : ""}
                   </h5>
                 ) : (

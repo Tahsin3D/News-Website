@@ -13,8 +13,8 @@ export default class News extends Component {
   }
 
   API_Url =
-    "https://newsapi.org/v2/everything?q=tesla&from=2024-07-21&sortBy=publishedAt&apiKey=7cad5226c20542d99dd8d20b5f838dd5";
-
+    "https://newsapi.org/v2/everything?q=tesla&from=2024-07-21&sortBy=publishedAt&apiKey=7cad5226c20542d99dd8d20b5f838dd5"
+    
   toPrevPage = async () => {
     try {
       let Url = `${this.API_Url}&page=${this.state.page - 1}&pageSize=${
