@@ -8,15 +8,19 @@ export default class News extends Component {
       articles: [],
       loading: false,
       page: 1,
-      pageSize: 15,
+      pageSize: this.props.pageSize,
     };
   }
 
+  API_Url =
+    "https://newsapi.org/v2/everything?q=tesla&from=2024-07-21&sortBy=publishedAt&apiKey=7cad5226c20542d99dd8d20b5f838dd5";
+
   toPrevPage = async () => {
     try {
-      let Url = `https://newsapi.org/v2/everything?q=tesla&from=2024-07-20&sortBy=publishedAt&apiKey=7cad5226c20542d99dd8d20b5f838dd5&page=${
-        this.state.page - 1
-      }&pageSize=${this.state.pageSize}`;
+      let Url = `${this.API_Url}&page=${this.state.page - 1}&pageSize=${
+        this.state.pageSize
+      }`;
+
       const res = await fetch(Url);
       const data = await res.json();
       this.setState({
@@ -33,9 +37,8 @@ export default class News extends Component {
       this.state.page + 1 <=
       Math.ceil(this.state.totalResults / this.state.pageSize)
     ) {
-      let Url = `https://newsapi.org/v2/everything?q=tesla&from=2024-07-20&sortBy=publishedAt&apiKey=7cad5226c20542d99dd8d20b5f838dd5&page=${
-        this.state.page + 1
-      }&pageSize=${this.state.pageSize}`;
+      let Url = `${this.API_Url}&page=${this.state.page + 1}&pageSize=${this.state.pageSize}`;
+
       try {
         const res = await fetch(Url);
         const data = await res.json();
@@ -50,9 +53,7 @@ export default class News extends Component {
   };
 
   async componentDidMount() {
-    let Url = `https://newsapi.org/v2/everything?q=tesla&from=2024-07-20&sortBy=publishedAt&apiKey=7cad5226c20542d99dd8d20b5f838dd5&page=${
-      this.state.page + 1
-    }&pageSize=${this.state.pageSize}`;
+    let Url = `${this.API_Url}&page=${this.state.page + 1}&pageSize=${this.state.pageSize}`;
 
     try {
       const res = await fetch(Url);
