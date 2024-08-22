@@ -18,13 +18,31 @@ export default class News extends Component {
     };
   }
 
+  API_Url =`https://newsapi.org/v2/top-headlines?category=${this.props.category}&language=en&sortBy=publishedAt&apiKey=${this.props.apiKey}`
+  
 
-  API_Url =
-  `https://newsapi.org/v2/top-headlines?category=${this.props.category}&language=en&sortBy=publishedAt&apiKey=${this.props.apiKey}`
+  async componentDidMount() {
+    
+    let Url = `${this.API_Url}&page=${this.state.page + 1}&pageSize=${this.state.pageSize}`;
+    try {
+      this.setState({loading:true})
+      const res = await fetch(Url);
+      const data = await res.json();
+      
+      this.setState({
+        articles: data.articles,
+        totalResults: data.totalResults,
+        loading:false
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+
   toPrevPage = async () => {
-    let Url = `${this.API_Url}&page=${this.state.page - 1}&pageSize=${
-      this.state.pageSize
-    }`;
+    let Url = `${this.API_Url}&page=${this.state.page - 1}&pageSize=${this.state.pageSize}`;
+
     try {
       
       this.setState({loading:true})
@@ -64,22 +82,6 @@ export default class News extends Component {
     }
   };
 
-  async componentDidMount() {
-    
-    let Url = `${this.API_Url}&page=${this.state.page + 1}&pageSize=${this.state.pageSize}`;
-    try {
-      this.setState({loading:true})
-      const res = await fetch(Url);
-      const data = await res.json();
-      this.setState({
-        articles: data.articles,
-        totalResults: data.totalResults,
-        loading:false
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   render() {
     console.log(this.API_Url)
@@ -117,7 +119,11 @@ export default class News extends Component {
                     description={element.description}
                     imgUrl={element.urlToImage}
                     newsUrl={element.url}
+                    date={element.publishedAt}
+                    source={element.source.name}
+                    category={this.props.category}
                   />
+                  
                 </div>
               );
             })}
