@@ -50,7 +50,6 @@ export default class News extends Component {
       this.fetchData(newPage);
     }
   };
-
   render() {
     console.log(this.API_Url)
     return (
