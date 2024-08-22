@@ -8,32 +8,36 @@ export class NewsItem extends Component {
     return (
       <>
         {newsUrl ? (
-          <a href={newsUrl} target="_blank" rel="noreferrer" className="">
-            <div
-              className="card my-3"
-              style={{ width: "18rem", height: "24rem", overflow: "hidden" }}
-            >
+          <div
+            className="card my-3"
+            style={{ width: "18rem", height: "24rem" }}
+          >
+            <a href={newsUrl} target="_blank" rel="noreferrer" className="">
               {imgUrl ? (
-                  <img
-                    src={imgUrl}
+                <img
                     className="card_image"
+                    src={imgUrl}
                     alt="..."
-                    loading="lazy"
+                    onError={(e) => {
+
+                      // Create a new element (div or img) for the fallback
+                      const fallbackElement = document.createElement("img");
+
+                      // Set content for the fallback element (text or image source)
+                      fallbackElement.src = noImage; 
+                      fallbackElement.classList.add("image-fallback");
+                      e.target.parentNode.replaceChild(
+                        fallbackElement,
+                        e.target
+                      );
+                    }}
                   />
               ) : (
-                <img
-                  loading="lazy"
-                  src={noImage}
-                  className="card_image"
-                  alt="..."
-                />
+                <img src={noImage} className="card_image" alt="..." />
               )}
               <div className="card-body d-flex align-content-around flex-wrap">
                 {title ? (
-                  <h5
-                    className="card-title"
-                    style={{ color: "red", textDecoration: "underline" }}
-                  >
+                  <h5 className="card-title" style={{ color: "black" }}>
                     {title.slice(0, 35)} {title.length > 35 ? "..." : ""}
                   </h5>
                 ) : (
@@ -48,8 +52,8 @@ export class NewsItem extends Component {
                   <p>No description</p>
                 )}
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         ) : (
           ""
         )}

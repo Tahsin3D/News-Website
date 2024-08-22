@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+
 import React, { Component } from "react";
 
 export default class NavBar extends Component {
@@ -6,7 +6,7 @@ export default class NavBar extends Component {
     return (
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/empty">
             NewsMonkey
           </a>
           <button
@@ -27,12 +27,7 @@ export default class NavBar extends Component {
                   Home
                 </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/about">
-                  About
-                </a>
-              </li>
-            </ul>
+             </ul>
           </div>
         </div>
       </nav>
