@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
 
-
 export default class News extends Component {
   static defaultProps = {
     category: "general",
-    apiKey: "7cad5226c20542d99dd8d20b5f838dd5"
-  }
+    apiKey: "7cad5226c20542d99dd8d20b5f838dd5",
+    pageSize: 5
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -15,105 +16,73 @@ export default class News extends Component {
       page: 1,
       pageSize: this.props.pageSize,
       loading: false,
+      totalResults: 0
     };
+    document.title = `News - ${this.props.category[0].toUpperCase()+this.props.category.slice(1)}`
   }
 
-  API_Url =`https://newsapi.org/v2/top-headlines?category=${this.props.category}&language=en&sortBy=publishedAt&apiKey=${this.props.apiKey}`
-  
+  API_Url = `https://newsapi.org/v2/everything?q=${this.props.category}&sortBy=publishedAt&language=en&apiKey=${this.props.apiKey}`;
 
-  async componentDidMount() {
-    
-    let Url = `${this.API_Url}&page=${this.state.page + 1}&pageSize=${this.state.pageSize}`;
+  fetchData = async (page) => {
+    const Url = `${this.API_Url}&page=${page}&pageSize=${this.state.pageSize}`;
     try {
-      this.setState({loading:true})
+      this.setState({ loading: true });
       const res = await fetch(Url);
       const data = await res.json();
-      
       this.setState({
         articles: data.articles,
         totalResults: data.totalResults,
-        loading:false
+        page: page,
+        loading: false,
       });
     } catch (err) {
       console.log(err);
     }
+  };
+
+  componentDidMount() {
+    this.fetchData(this.state.page);
   }
 
-
-  toPrevPage = async () => {
-    let Url = `${this.API_Url}&page=${this.state.page - 1}&pageSize=${this.state.pageSize}`;
-
-    try {
-      
-      this.setState({loading:true})
-      const res = await fetch(Url);
-      
-      const data = await res.json();
-      this.setState({
-        articles: data.articles,
-        page: this.state.page - 1,
-        loading:false
-      });
-    } catch (err) {
-      console.log(err);
+  handlePageChange = (direction) => {
+    const newPage = this.state.page + direction;
+    if (newPage >= 1 && newPage <= Math.ceil(this.state.totalResults / this.state.pageSize)) {
+      this.fetchData(newPage);
     }
   };
-
-  toNextPage = async () => {
-    if (
-      this.state.page + 1 <=
-      Math.ceil(this.state.totalResults / this.state.pageSize)
-    ) {
-      
-      let Url = `${this.API_Url}&page=${this.state.page + 1}&pageSize=${this.state.pageSize}`;
-      try {
-        this.setState({loading:true});
-        const res = await fetch(Url);
-        
-        const data = await res.json();
-        this.setState({
-          articles: data.articles,
-          page: this.state.page + 1,
-          loading:false
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-
 
   render() {
     console.log(this.API_Url)
     return (
       <>
         <div className="container my-3">
-          <h2 className="text-center">TAHSIN News - {this.props.category==="general"?'Top Headlines':this.props.category[0].toUpperCase()+this.props.category.slice(1)}</h2>
+          <h2 className="text-center">
+            TAHSIN News - {this.props.category === "general" ? "Top Headlines" : this.props.category[0].toUpperCase() + this.props.category.slice(1)}
+          </h2>
 
           <div className="container d-flex justify-content-between my-4">
             <button
               disabled={this.state.page <= 1}
               className="btn btn-primary"
-              onClick={this.toPrevPage}
+              onClick={() => this.handlePageChange(-1)}
             >
               ← Previous Page
             </button>
             <button
-              disabled={
-                this.state.page + 1 >
-                Math.ceil(this.state.totalResults / this.state.pageSize)
-              }
+              disabled={this.state.page >= Math.ceil(this.state.totalResults / this.state.pageSize)}
               className="btn btn-primary"
-              onClick={this.toNextPage}
+              onClick={() => this.handlePageChange(1)}
             >
               Next Page &rarr;
             </button>
           </div>
-              {this.state.loading && <Spinner/>}
+
+          {this.state.loading && <Spinner />}
+
           <div className="row my-1">
-          {!this.state.loading && this.state.articles.map((element) => {
+            {!this.state.loading && this.state.articles.map((element) => {
               return (
-                <div className="col-md-4">
+                <div className="col-md-4" key={element.url}>
                   <NewsItem
                     title={element.title}
                     description={element.description}
@@ -123,7 +92,6 @@ export default class News extends Component {
                     source={element.source.name}
                     category={this.props.category}
                   />
-                  
                 </div>
               );
             })}
@@ -133,17 +101,14 @@ export default class News extends Component {
             <button
               disabled={this.state.page <= 1}
               className="btn btn-primary"
-              onClick={this.toPrevPage}
+              onClick={() => this.handlePageChange(-1)}
             >
               ← Previous Page
             </button>
             <button
-              disabled={
-                this.state.page + 1 >
-                Math.ceil(this.state.totalResults / this.state.pageSize)
-              }
+              disabled={this.state.page >= Math.ceil(this.state.totalResults / this.state.pageSize)}
               className="btn btn-primary"
-              onClick={this.toNextPage}
+              onClick={() => this.handlePageChange(1)}
             >
               Next Page &rarr;
             </button>

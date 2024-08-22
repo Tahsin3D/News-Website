@@ -5,14 +5,14 @@ import News from './components/News';
 import { Route, Routes , BrowserRouter} from 'react-router-dom';
 
 function App() {
-  const pageSize = 3;
+  const pageSize = 9;
   return (
     <>
       <BrowserRouter>
         <NavBar />
         <Routes>
           <Route path="/" element={<News key="general"pageSize={pageSize} category="general" />} />
-          <Route path="/about" element={<About/>} />
+          <Route path="/about" element={<About category="about"/>} />
           <Route path="/business" element={<News key="business"pageSize={pageSize} category="business" />} />
           <Route path="/entertainment" element={<News key="entertainment"pageSize={pageSize} category="entertainment" />} />
           <Route path="/health" element={<News key="health"pageSize={pageSize} category="health" />} />

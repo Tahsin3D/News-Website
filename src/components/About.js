@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 export default class About extends Component {
+    constructor(props)
+    {
+        super(props);
+        document.title = `News - ${this.props.category[0].toUpperCase()+this.props.category.slice(1)}`
+    }
   render() {
     return (
         <div className="text-center container my-3">
