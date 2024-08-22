@@ -10,7 +10,7 @@ export class NewsItem extends Component {
         {newsUrl ? (
           <div
             className="card my-3"
-            style={{ width: "18rem", height: "24rem" }}
+            style={{height: "24rem" }}
           >
             <a href={newsUrl} target="_blank" rel="noreferrer" className="">
               {imgUrl ? (
@@ -38,7 +38,7 @@ export class NewsItem extends Component {
               <div className="card-body d-flex align-content-around flex-wrap">
                 {title ? (
                   <h5 className="card-title" style={{ color: "black" }}>
-                    {title.slice(0, 35)} {title.length > 35 ? "..." : ""}
+                    {title.slice(0, 45)} {title.length > 45 ? "..." : ""}
                   </h5>
                 ) : (
                   <h5>No Title</h5>

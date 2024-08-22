@@ -4,20 +4,23 @@ import Spinner from "./Spinner";
 
 
 export default class News extends Component {
+  static defaultProps = {
+    category: "general",
+    apiKey: "7cad5226c20542d99dd8d20b5f838dd5"
+  }
   constructor(props) {
     super(props);
     this.state = {
       articles: [],
       page: 1,
       pageSize: this.props.pageSize,
-      loading: false
+      loading: false,
     };
   }
 
-  static defaultProps
 
   API_Url =
-  "https://newsapi.org/v2/everything?q=tesla&from=2024-07-22&sortBy=publishedAt&apiKey=ea1fde3c4c3841f9bad7f5f1fa4792ca"    
+  `https://newsapi.org/v2/top-headlines?category=${this.props.category}&language=en&sortBy=publishedAt&apiKey=${this.props.apiKey}`
   toPrevPage = async () => {
     let Url = `${this.API_Url}&page=${this.state.page - 1}&pageSize=${
       this.state.pageSize
@@ -79,10 +82,11 @@ export default class News extends Component {
   }
 
   render() {
+    console.log(this.API_Url)
     return (
       <>
         <div className="container my-3">
-          <h2 className="text-center">NewsMonkey - Top Headlines</h2>
+          <h2 className="text-center">TAHSIN News - {this.props.category==="general"?'Top Headlines':this.props.category[0].toUpperCase()+this.props.category.slice(1)}</h2>
 
           <div className="container d-flex justify-content-between my-4">
             <button
