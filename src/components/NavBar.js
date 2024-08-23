@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default class NavBar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav style={{position:"relative", zIndex:"2", backgroundColor:"white", width:"100%"}}className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             NewsMonkey
