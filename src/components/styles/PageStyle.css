@@ -1,0 +1,42 @@
+.card_image, .image-fallback{
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card, .badge {
+    border-radius: 10px;
+    transition: box-shadow 0.4s ease;
+}
+.card:hover {
+    box-shadow: 0 0 10px black;
+}
+
+.card:hover .badge{
+    box-shadow: 0 0 8px black;
+}
+
+.image-fallback {
+    width:100%;
+    height: 150px
+}
+
+.nav-link {
+    font-weight: 600;
+}
+
+/* .categories {
+    background-color: red;
+    height: 100%
+} */
+
+
+
+
+@media (min-width: 992px) {
+    
+}
+@media (max-width: 991px) {
+    
+}

@@ -1,96 +1,99 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export default class News extends Component {
-  static defaultProps = {
-    category: "general",
-    apiKey: "7874475833724fc9a99a419e25d4e54a",
-    pageSize: 5
-  };
+const News = (props) => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      articles: [],
-      page: 1,
-      pageSize: this.props.pageSize,
-      loading: true,
-      totalResults: 0,
-    };
-    this.props.updateProgress(10);
-    document.title = `News - ${this.props.category[0].toUpperCase()+this.props.category.slice(1)}`
+  const [articles, setArticles] = useState([])
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(true)
+  const [totalResults, setTotalResults] = useState(0)
+
+
+    const pageSize = props.pageSize;
+    props.updateProgress(10);
+    document.title = `News - ${props.category[0].toUpperCase()+props.category.slice(1)}`
+  const apiKey = "7874475833724fc9a99a419e25d4e54a"
+
+  const API_Url = `https://newsapi.org/v2/everything?q=${props.category}&sortBy=publishedAt&language=en&apiKey=${apiKey}`;
+
+
+
+  const updateNews = async() => 
+  {
+    const Url = `${API_Url}&page=${page}&pageSize=${pageSize}`;
+    try {
+      props.updateProgress(20);
+      setLoading( true );
+      const res = await fetch(Url);
+      props.updateProgress(40);
+      const data = await res.json();
+      props.updateProgress(60);
+
+      setArticles(data.articles);
+      setTotalResults(data.totalResults)
+      setLoading(false);
+
+      props.updateProgress(100);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  API_Url = `https://newsapi.org/v2/everything?q=${this.props.category}&sortBy=publishedAt&language=en&apiKey=${this.props.apiKey}`;
+  useEffect(() => {
+    updateNews();
+    return ()=> setPage(1);
+    // eslint-disable-next-line
+  }, [])
 
 
-  fetchMoreData = async() =>
+
+
+
+  const fetchMoreData = async() =>
   {
-    const Url = `${this.API_Url}&page=${this.state.page+1}&pageSize=${this.state.pageSize}`;
+    const Url = `${API_Url}&page=${page+1}&pageSize=${pageSize}`;
 
-    this.setState({page: this.state.page+1});
+    setPage(page+1);
     try{
-      this.props.updateProgress(30);
+      props.updateProgress(30);
       const res = await fetch(Url);
-      this.props.updateProgress(50);
+      props.updateProgress(50);
       const data = await res.json();
       
-      this.props.updateProgress(70);
-      this.setState({
-        articles: this.state.articles.concat(data.articles)
-      })
-      this.props.updateProgress(100);
+      props.updateProgress(70);
+      setArticles(articles.concat(data.articles))
+      props.updateProgress(100);
     }catch(err)
     {
       console.log(err);
     }
   }
 
+  
 
-  async componentDidMount() {
-    const Url = `${this.API_Url}&page=${this.state.page}&pageSize=${this.state.pageSize}`;
-    try {
-      this.props.updateProgress(20);
-      this.setState({ loading: true });
-      const res = await fetch(Url);
-      this.props.updateProgress(40);
-      const data = await res.json();
-      this.props.updateProgress(60);
-      this.setState({
-        articles: data.articles,
-        totalResults: data.totalResults,
-        loading: false,
-      });
-      this.props.updateProgress(100);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
-  render() {
-    console.log(`URL:  ${this.API_Url}`)
     return (
       <>
         
-          <h2 className="text-center">
-            TAHSIN News - {this.props.category === "general" ? "Top Headlines" : this.props.category[0].toUpperCase() + this.props.category.slice(1)}
+          <h2 className="text-center" style={{marginTop:"100px"}}>
+            TAHSIN News - {props.category === "general" ? "Top Headlines" : props.category[0].toUpperCase() + props.category.slice(1)}
           </h2>
 
-          {this.state.loading && <Spinner />}
+          {loading && <Spinner />}
           
           <InfiniteScroll
-          dataLength={this.state.articles.length}
-          next={this.fetchMoreData}
-          hasMore={this.state.articles.length !== this.state.totalResults}
+          dataLength={articles.length}
+          next={fetchMoreData}
+          hasMore={articles.length !== totalResults}
           loader={<Spinner/>}
           >
                 <div className="container my-3">
                     <div className="row my-1">
-                      {this.state.articles.map((element) => {
+                      {articles.map((element) => {
                         return (
-                          element.title!=="[Removed]" &&
+                          element.urlToImage!==null &&
                           <div className="col-md-4" key={element.url}>
                             <NewsItem
                               title={element.title}
@@ -99,7 +102,8 @@ export default class News extends Component {
                               newsUrl={element.url}
                               date={element.publishedAt}
                               source={element.source.name}
-                              category={this.props.category}
+                              category={props.category}
+                              mode={props.mode}
                             />
                           </div>
                         );
@@ -110,5 +114,12 @@ export default class News extends Component {
         
       </>
     );
-  }
 }
+
+News.defaultProps = {
+  category: "general",
+  apiKey: "7874475833724fc9a99a419e25d4e54a",
+  pageSize: 5
+};
+
+export default News;
