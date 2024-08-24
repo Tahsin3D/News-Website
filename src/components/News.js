@@ -77,8 +77,8 @@ const News = (props) => {
     return (
       <>
         
-          <h2 className="text-center" style={{marginTop:"100px"}}>
-            TAHSIN News - {props.category === "general" ? "Top Headlines" : props.category[0].toUpperCase() + props.category.slice(1)}
+          <h2 className="text-center" style={{marginTop:"80px"}}>
+            News - {props.category === "general" ? "Top Headlines" : props.category[0].toUpperCase() + props.category.slice(1)}
           </h2>
 
           {loading && <Spinner />}

@@ -10,6 +10,7 @@ const NewsItem = ({
   newsUrl,
   date,
   source,
+  mode
 }) => {
   const newsColor = (category) => {
     switch (category) {
@@ -18,7 +19,7 @@ const NewsItem = ({
       case "entertainment":
         return "#FF4500"; // Orange Red
       case "general":
-        return "gray"; // Lime Green
+        return "#a7a7a7"; // Lime Green
       case "health":
         return "#FF1493"; // Deep Pink
       case "science":
@@ -36,7 +37,7 @@ const NewsItem = ({
     <>
       {newsUrl ? (
         title !== "[Removed]" ? (
-          <div className="card my-3" style={{ height: "24rem" }}>
+          <div className="card my-3" style={{ border: mode==="light"?"":"1px solid white", height: "24rem" ,color: mode==="light"?"black":"white", backgroundColor:mode==="dark"? "#444444": "#eeede7"}}>
             <a href={newsUrl} target="_blank" rel="noreferrer" className="">
               {imgUrl ? (
                 <>
@@ -54,7 +55,7 @@ const NewsItem = ({
                   </span>
                   <div>
                     <img
-                      style={{ borderRadius: "5px" }}
+                      style={{ borderRadius: "10px" }}
                       className="card_image"
                       src={imgUrl}
                       alt="..."
@@ -76,7 +77,7 @@ const NewsItem = ({
               <div className="card-body d-flex align-content-around flex-wrap">
                 <div>
                   {title ? (
-                    <h5 className="card-title" style={{ color: "black" }}>
+                    <h5 className="card-title" style={{ color: mode==="light"?"black":"white" }}>
                       {window.innerWidth >= 991
                         ? title
                           ? title.length > 75
@@ -100,7 +101,7 @@ const NewsItem = ({
                   )}
 
                   {description ? (
-                    <p className="card-text">
+                    <p className="card-text" style={{color: mode==="light"?"black":"white"}}>
                       {window.innerWidth < 1200
                         ? window.innerWidth >= 991
                           ? description
@@ -119,15 +120,15 @@ const NewsItem = ({
                             ? `${description.slice(0, 150)}...`
                             : description
                           : ""
-                        : description.length > 155
-                        ? `${description.slice(0, 155)}...`
+                        : description.length > 150
+                        ? `${description.slice(0, 150)}...`
                         : description}
                     </p>
                   ) : (
                     <p>No description...</p>
                   )}
                 </div>
-                <p className="card-text my-2" style={{ fontSize: "12px" }}>
+                <p className="card-text my-2" style={{ fontSize: "12px",color: mode==="light"?"black":"white" }}>
                   <small style={{fontWeight:"300"}} className="text-body-secondary">
                     Published At: {new Date(date).toDateString()}
                   </small>

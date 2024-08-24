@@ -1,10 +1,10 @@
 import React from 'react'
-import spinner from "./images/Spinner.gif"
+import "./styles/PageStyle.css"
 
 const Spinner = () => {
     return (
-        <div  className="container text-center">
-                  <img style={{width:"60px", borderRadius:"50%"}} src={spinner} alt="..." />
+        <div style={{marginTop:"0px", width:"100%", height:"30px"}}  className="container">
+            <div class="loader" style={{margin:"0 auto"}}></div>
         </div>
     )
   }

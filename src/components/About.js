@@ -19,13 +19,13 @@ const About = (props) => {
                 <section className="categories">
                     <h2>Our News Categories</h2>
                     <ul style={{listStyle:"none"}}>
-                        <li><Link style={{color:props.mode==="light"? "black": "white"}} to="/general">World News</Link></li>
-                        <li><Link style={{color:props.mode==="light"? "black": "white"}} to="/technology">Technology</Link></li>
-                        <li><Link style={{color:props.mode==="light"? "black": "white"}} to="/sports">Sports</Link></li>
-                        <li><Link style={{color:props.mode==="light"? "black": "white"}} to="/entertainment">Entertainment</Link></li>
-                        <li><Link style={{color:props.mode==="light"? "black": "white"}} to="/health">Health</Link></li>
-                        <li><Link style={{color:props.mode==="light"? "black": "white"}} to="/science">Science</Link></li>
-                        <li><Link style={{color:props.mode==="light"? "black": "white"}} to="/business">Business</Link></li>
+                        <li><Link style={{color:props.mode==="light"? "black": "#eeede7"}} to="/general">World News</Link></li>
+                        <li><Link style={{color:props.mode==="light"? "black": "#eeede7"}} to="/technology">Technology</Link></li>
+                        <li><Link style={{color:props.mode==="light"? "black": "#eeede7"}} to="/sports">Sports</Link></li>
+                        <li><Link style={{color:props.mode==="light"? "black": "#eeede7"}} to="/entertainment">Entertainment</Link></li>
+                        <li><Link style={{color:props.mode==="light"? "black": "#eeede7"}} to="/health">Health</Link></li>
+                        <li><Link style={{color:props.mode==="light"? "black": "#eeede7"}} to="/science">Science</Link></li>
+                        <li><Link style={{color:props.mode==="light"? "black": "#eeede7"}} to="/business">Business</Link></li>
                     </ul>
                 </section>
 

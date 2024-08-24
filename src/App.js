@@ -10,7 +10,7 @@ import LoadingBar from "react-top-loading-bar";
 const App = () => {
   const [progress, setProgress] = useState(0);
   const [mode, setMode] = useState("light");
-  const pageSize = 5;
+  const pageSize = 12;
 
   const toggleMode = () => {
     if(mode==="light")
@@ -22,8 +22,8 @@ const App = () => {
       setMode("light")
     }
   }
-  document.body.style.backgroundColor = mode==="dark"?"#000000":"white"
-  document.body.style.color = mode==="dark"?"white":"black"
+  document.body.style.backgroundColor = mode==="dark"?"#444444":"#eeede7"
+  document.body.style.color = mode==="dark"?"#eeede7":"black"
   return (
     <BrowserRouter>
       <NavBar toggleMode={toggleMode} mode={mode}/>
