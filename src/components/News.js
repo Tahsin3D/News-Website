@@ -14,7 +14,7 @@ const News = (props) => {
     const pageSize = props.pageSize;
     props.updateProgress(10);
     document.title = `News - ${props.category[0].toUpperCase()+props.category.slice(1)}`
-  const apiKey = "7874475833724fc9a99a419e25d4e54a"
+  const apiKey = "7cad5226c20542d99dd8d20b5f838dd5"
 
   const API_Url = `https://newsapi.org/v2/everything?q=${props.category}&sortBy=publishedAt&language=en&apiKey=${apiKey}`;
 
@@ -65,6 +65,7 @@ const News = (props) => {
       props.updateProgress(70);
       setArticles(articles.concat(data.articles))
       props.updateProgress(100);
+      console.log(Url)
     }catch(err)
     {
       console.log(err);
